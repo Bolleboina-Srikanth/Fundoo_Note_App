@@ -49,3 +49,15 @@ D:\DotNetProject\FundooNoteApp\FundooNoteApp\obj\Debug\netcoreapp3.1\FundooNoteA
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\obj\Debug\netcoreapp3.1\FundooNoteApp.pdb
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\obj\Debug\netcoreapp3.1\FundooNoteApp.genruntimeconfig.cache
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Abstractions.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\System.Text.Encodings.Web.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\System.Text.Json.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\obj\Debug\netcoreapp3.1\FundooNoteApp.MvcApplicationPartsAssemblyInfo.cs

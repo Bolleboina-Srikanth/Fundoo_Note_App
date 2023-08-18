@@ -1,9 +1,15 @@
 ﻿using CommonLayer.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
 namespace RepoLayer.Services
@@ -11,10 +17,12 @@ namespace RepoLayer.Services
     public class UserRepo:IUserRepo
     {
         private readonly FundooContext _fundooContext;
+        private readonly IConfiguration _configuration;
 
-        public UserRepo(FundooContext fundooContext)
+        public UserRepo(FundooContext fundooContext, IConfiguration configuration)
         {
             this._fundooContext = fundooContext;
+            this._configuration = configuration;
         }
         public UserEntity UserRegisteration(UserRegisterationModel model)
         {
@@ -29,7 +37,7 @@ namespace RepoLayer.Services
 
                 _fundooContext.User.Update(userTable);
                 _fundooContext.SaveChanges();
-                if(userTable !=null)
+                if (userTable != null)
                 {
                     return userTable;
                 }
@@ -39,6 +47,46 @@ namespace RepoLayer.Services
                 }
             }
             catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+            public string GenerateJwtToken(string Email, long UserId)
+            {
+                var claims = new List<Claim>
+                {
+                new Claim("UserId", UserId.ToString()),
+                new Claim("Email" , Email)
+                };
+                // You can add more claims as needed, such as roles or custom claims.
+
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]));
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var token = new JwtSecurityToken(_configuration["JwtSettings:Issuer"], _configuration["JwtSettings:Audience"], claims, DateTime.Now, DateTime.Now.AddHours(12), creds);
+
+
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+        
+        public string UserLogin(UserLoginModel model)
+        {
+            try
+            {
+                var Credientials = _fundooContext.User.FirstOrDefault(x => x.Email == model.Email && x.Password == model.Password);
+                if (Credientials != null)
+                {
+                    var token = GenerateJwtToken(Credientials.Email, Credientials.UserId);
+
+
+                    return token;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch(Exception ex)
             {
                 throw ex;
             }
