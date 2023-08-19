@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace FundooNoteApp.Controllers
 {
@@ -70,5 +71,26 @@ namespace FundooNoteApp.Controllers
 
                 }
             }
+        [Authorize]
+        [HttpPut]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(string NewPassword, string ConfirmPassword)
+        {
+            var email = User.Claims.FirstOrDefault(s => s.Type == "Email").Value;
+            if (email != null)
+            {
+                var result = _userBusiness.ResetPasword(email, NewPassword, ConfirmPassword);
+                if (result != null)
+                {
+                    return Ok(new { success = true, message = "Reset Password  Successfully" });
+                }
+                else
+                {
+                    return Unauthorized(new { success = false, message = "Invalid Credentials Reset Password  UnSuccessfull " });
+                }
+
+            }
+            return null;
         }
+    }
 }
