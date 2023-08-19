@@ -77,8 +77,6 @@ namespace RepoLayer.Services
                 if (Credientials != null)
                 {
                     var token = GenerateJwtToken(Credientials.Email, Credientials.UserId);
-
-
                     return token;
                 }
                 else
@@ -90,6 +88,28 @@ namespace RepoLayer.Services
             {
                 throw ex;
             }
+        }
+        public string ForgotPassword(ForgotPasswordModel forgotPasswordModel)
+        {
+            try
+            {
+                var emailValidity = _fundooContext.User.FirstOrDefault(u => u.Email == forgotPasswordModel.Email);
+                if (emailValidity != null)
+                {
+                    var token = GenerateJwtToken(emailValidity.Email, emailValidity.UserId);
+                    MSMQ msmq = new MSMQ();
+                    msmq.sendData2Queue(token);
+                    return token;
+                }
+
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

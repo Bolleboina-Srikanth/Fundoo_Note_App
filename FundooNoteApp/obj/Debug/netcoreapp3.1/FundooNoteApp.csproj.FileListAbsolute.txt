@@ -61,3 +61,14 @@ D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Swashbuckle
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\obj\Debug\netcoreapp3.1\FundooNoteApp.MvcApplicationPartsAssemblyInfo.cs
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Experimental.System.Messaging.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\System.Web.Http.Owin.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.Owin.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Owin.dll

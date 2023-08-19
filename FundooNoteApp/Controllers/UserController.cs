@@ -39,7 +39,7 @@ namespace FundooNoteApp.Controllers
         {
             try
             {
-          
+
                 var result = _userBusiness.UserLogin(model);
                 if (result != null)
                 {
@@ -50,11 +50,25 @@ namespace FundooNoteApp.Controllers
                     return this.BadRequest(new { Success = false, Message = "login failed", Data = result });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-
         }
-    }
+            [HttpPost]
+            [Route("ForgotPassword")]
+            public IActionResult ForgetPassword(ForgotPasswordModel Model)
+            {
+                var result = _userBusiness.ForgotPassword(Model);
+                if (result != null)
+                {
+                    return Ok(new { messege = "Token sent Successfully" });
+                }
+                else
+                {
+                    return Unauthorized(new { messeg = " Invalid Credentials" });
+
+                }
+            }
+        }
 }
