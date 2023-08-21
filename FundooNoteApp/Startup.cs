@@ -40,6 +40,8 @@ namespace FundooNoteApp
             services.AddControllers();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<INoteBusiness, NoteBusiness>();
+            services.AddTransient<INoteRepo, NoteRepo>();
 
             services.AddSwaggerGen(c =>
             {
@@ -92,10 +94,6 @@ namespace FundooNoteApp
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
-        
-
-
-
     }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

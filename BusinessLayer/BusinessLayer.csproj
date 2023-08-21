@@ -19,8 +19,4 @@
     <ProjectReference Include="..\RepoLayer\RepoLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
-
 </Project>
