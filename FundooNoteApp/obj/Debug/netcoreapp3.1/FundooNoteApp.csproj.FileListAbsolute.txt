@@ -72,3 +72,4 @@ D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Microsoft.O
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\Owin.dll
+D:\DotNetProject\FundooNoteApp\FundooNoteApp\bin\Debug\netcoreapp3.1\CloudinaryDotNet.dll

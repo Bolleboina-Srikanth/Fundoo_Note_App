@@ -1,10 +1,12 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Models;
+using Microsoft.AspNetCore.Http;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BusinessLayer.Services
 {
@@ -98,6 +100,18 @@ namespace BusinessLayer.Services
             try
             {
                 return _noterepo.TrashNoteById(NoteId, UserId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<Tuple<int, string>> UpdateNoteImage(long userId, long noteId, IFormFile imageFile)
+        {
+            try
+            {
+                Tuple<int, string> uploadResult = await _noterepo.UpdateNoteImage(userId, noteId, imageFile);
+                return uploadResult;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,8 @@
-﻿using CommonLayer.Models;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using CommonLayer.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using RepoLayer.Context;
 using RepoLayer.Entity;
@@ -7,16 +11,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RepoLayer.Services
 {
     public class NoteRepo:INoteRepo
     {
         private readonly FundooContext _fundooContext;
+        private readonly IConfiguration _configuration;
+        private readonly FileService _fileService;
+        private readonly Cloudinary _cloudinary;
 
-        public NoteRepo(FundooContext fundooContext)
+        public NoteRepo(FundooContext fundooContext, IConfiguration configuration, FileService fileService, Cloudinary cloudinary)
         {
             this._fundooContext = fundooContext;
+            this._configuration = configuration;
+            this._fileService = fileService;
+            this._cloudinary = cloudinary;
         }
         public NoteEntity CreateNote(NoteMakingModel model, long userId)
         {
@@ -153,6 +164,39 @@ namespace RepoLayer.Services
                 _fundooContext.SaveChanges();
 
                 return true;
+            }
+        }
+        public async Task<Tuple<int, string>> UpdateNoteImage(long userId, long noteId, IFormFile imageFile)
+        {
+            try
+            {
+                var note = _fundooContext.Notes.FirstOrDefault(x => x.NoteId == noteId && x.UserId == userId);
+                if (note != null)
+                {
+                    var fileServiceResult = await _fileService.SaveImage(imageFile);
+                    if (fileServiceResult.Item1 == 0)
+                    {
+                        return new Tuple<int, string>(0, fileServiceResult.Item2);
+                    }
+                    //Upload image to Cloudinary
+                    var uploading = new ImageUploadParams
+                    {
+                        File = new FileDescription(imageFile.FileName, imageFile.OpenReadStream()),
+                    };
+                    ImageUploadResult uploadResult = await _cloudinary.UploadAsync(uploading);
+                    //update product entity with image url from cloudinary
+                    string ImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                    //Add the product entity to the Dbconytext
+                    note.Image = ImageUrl;
+                    _fundooContext.Notes.Update(note);
+                    _fundooContext.SaveChanges();
+                    return new Tuple<int, string>(1, "Product added with image successfully");
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<int, string>(0, "An error occured:" + ex.Message);
             }
         }
     }

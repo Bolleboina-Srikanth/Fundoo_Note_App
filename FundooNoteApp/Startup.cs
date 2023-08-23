@@ -1,5 +1,6 @@
 using BusinessLayer.Interface;
 using BusinessLayer.Services;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,7 +43,8 @@ namespace FundooNoteApp
             services.AddTransient<IUserRepo, UserRepo>();
             services.AddTransient<INoteBusiness, NoteBusiness>();
             services.AddTransient<INoteRepo, NoteRepo>();
-
+            services.AddTransient<FileService, FileService>();
+            //----------------------------------------------------------------
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -71,6 +73,7 @@ namespace FundooNoteApp
                    { securitySchema, new[] { "Bearer" } }
                  });
             });
+            //--------------------------------------------------------------
             //configure JWT authentication
 
             var jwtSettings = Configuration.GetSection("JwtSettings");
@@ -82,19 +85,29 @@ namespace FundooNoteApp
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
+                 .AddJwtBearer(options =>
+                 {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["JwtSettings:Issuer"],
                     ValidAudience = Configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
-    }
+                    };
+                 });
+
+
+        //---------------------------------------------------------------------------------------
+            IConfigurationSection configurationSection = Configuration.GetSection("CloudinarySettings");
+            Account account = new Account(
+                   configurationSection["my_cloud_name"],
+                  configurationSection["my_api_key"],
+                  configurationSection["my_api_secret"]);
+            Cloudinary cloudinary = new Cloudinary(account);
+            services.AddSingleton(cloudinary);
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FundooNoteApp.Controllers
 {
@@ -196,6 +197,27 @@ namespace FundooNoteApp.Controllers
                 return this.BadRequest(new { Success = false, Message = "Note id not found", Data = result });
 
             }
+        }
+        [Authorize]
+        [HttpPatch]
+        [Route("uploadimage")]
+        public async Task<IActionResult> UploadNoteImage(long noteId, IFormFile imageFile)
+        {
+            // Get the authenticated user's userId from the claims
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            int userId = int.Parse(UserIdClaim);
+            if (userId == null)
+                return Unauthorized(); // User not authenticated properly
+            Tuple<int, string> result = await _noteBusiness.UpdateNoteImage(userId, noteId, imageFile);
+            if (result.Item1 == 1)
+            {
+                return this.Ok(new { success = true, Message = "image uploaded successfully", data = result });
+            }
+            else
+            {
+                return this.BadRequest(new { success = true, Message = "image uploaded unsuccessfully", data = result });
+            }
+
         }
     }
 }
