@@ -26,5 +26,38 @@ namespace BusinessLayer.Services
                 throw (ex);
             }
         }
+        public NoteEntity UpdateNote(string Title, string TakeNote, long NoteId, long userId)
+        {
+            try
+            {
+                return _noterepo.UpdateNote(Title,TakeNote,NoteId, userId);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        public bool DeleteNoteById(long noteId, long userId)
+        {
+            try
+            {
+                return _noterepo.DeleteNoteById( noteId, userId);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        public List<NoteEntity> GetNotesForUser(int userId)
+        {
+            try
+            {
+                return _noterepo.GetNotesForUser(userId);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
     }
 }

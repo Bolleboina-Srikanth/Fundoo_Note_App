@@ -48,5 +48,79 @@ namespace FundooNoteApp.Controllers
 
             }
         }
+        [Authorize]
+        [HttpPatch]
+        [Route("UpdateNote")]
+        public IActionResult UpdateNote(string Title, string TakeNote, long NoteId)
+        {
+             var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+             int userId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.UpdateNote(Title, TakeNote, NoteId, userId);
+            try
+            {
+
+                if (result != null)
+                {
+                    return this.Ok(new { Success = true, Message = "Note updated  successful", Data = result });
+
+                }
+                else
+                {
+                    return this.BadRequest(new { Success = false, Message = "Note updated unsuccessful", Data = result });
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteNote")]
+        public IActionResult DeleteNote(long noteId)
+        {
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            // var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+            int userId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.DeleteNoteById(noteId, userId);
+            try
+            {
+
+                if (result != null)
+                {
+                    return this.Ok(new { Success = true, Message = "Note deleted  successful", Data = result });
+
+                }
+                else
+                {
+                    return this.BadRequest(new { Success = false, Message = "Note id not found", Data = result });
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [Authorize]
+        [HttpGet]
+        [Route("GetAllNotes")]
+        public IActionResult GetAll()
+        {
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            // var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+            int userId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.GetNotesForUser(userId);
+            if (result != null)
+            {
+                return this.Ok(new { Success = true, Message = " Notes retrieve  successfully", Data = result });
+            }
+            else
+            {
+                return this.BadRequest(new { Success = false, Message = "id not found", Data = result });
+
+            }
+        }
     }
 }

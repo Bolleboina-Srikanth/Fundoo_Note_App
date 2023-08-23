@@ -1,4 +1,5 @@
 ﻿using CommonLayer.Models;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
@@ -22,7 +23,6 @@ namespace RepoLayer.Services
             
             try
             {
-      
                     NoteEntity newNote = new NoteEntity();
                     newNote.UserId = userId;
                     newNote.Title = model.Title;
@@ -45,6 +45,46 @@ namespace RepoLayer.Services
             {
                 throw ex;
             }
+        }
+        public NoteEntity UpdateNote(string Title, string TakeNote, long NoteId,long userId)
+        {
+            try
+            {
+                var existingNote = _fundooContext.Notes.FirstOrDefault(x=>x.UserId == userId && x.NoteId==NoteId);
+
+                if (existingNote == null)
+                    return null;
+
+                existingNote.Title = Title + existingNote.Title;
+                existingNote.TakeNote = TakeNote + existingNote.TakeNote;
+                // Update other columns as needed
+                _fundooContext.Notes.Update(existingNote);
+                _fundooContext.SaveChanges();
+
+                return existingNote;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool DeleteNoteById(long noteId,long userId)
+        {
+            var existingNote = _fundooContext.Notes.FirstOrDefault(x=>x.NoteId == noteId && x.UserId == userId);
+
+            if (existingNote == null)
+                return false;
+            else
+            {
+                _fundooContext.Notes.Remove(existingNote);
+                _fundooContext.SaveChanges();
+
+                return true;
+            }
+        }
+        public List<NoteEntity> GetNotesForUser(int userId)
+        {
+            return _fundooContext.Notes.Where(note => note.UserId == userId).ToList();
         }
     }
 }
