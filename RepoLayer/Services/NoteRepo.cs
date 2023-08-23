@@ -86,5 +86,74 @@ namespace RepoLayer.Services
         {
             return _fundooContext.Notes.Where(note => note.UserId == userId).ToList();
         }
+        public string UpdateColorNoteById(long NoteId, long UserId, string colour)
+        {
+            var result = _fundooContext.Notes.FirstOrDefault(x => x.NoteId == NoteId && x.UserId == UserId);
+
+            if (result == null)
+            {
+                return null;
+            }
+            else
+            {
+                result.Colour = colour;
+                _fundooContext.Notes.Update(result);
+                _fundooContext.SaveChanges();
+
+                return result.Colour;
+            }
+        }
+        public bool ArchiveNoteById(long NoteId, long UserId)
+        {
+            var result = _fundooContext.Notes.FirstOrDefault(x => x.NoteId == NoteId && x.UserId == UserId);
+
+            if (result == null)
+            {
+                return false;
+            }
+            else
+            {
+                result.IsArchive = true;
+                _fundooContext.Notes.Update(result);
+                _fundooContext.SaveChanges();
+
+                return true;
+            }
+        }
+        public bool PinNoteById(long NoteId, long UserId)
+        {
+            var result = _fundooContext.Notes.FirstOrDefault(x => x.NoteId == NoteId && x.UserId == UserId);
+
+            if (result == null)
+            {
+                return false;
+            }
+            else
+            {
+                result.IsPin = true;
+                _fundooContext.Notes.Update(result);
+                _fundooContext.SaveChanges();
+
+                return true;
+            }
+        }
+
+        public bool TrashNoteById(long NoteId, long UserId)
+        {
+            var result = _fundooContext.Notes.FirstOrDefault(x => x.NoteId == NoteId && x.UserId == UserId);
+
+            if (result == null)
+            {
+                return false;
+            }
+            else
+            {
+                result.IsTrash = true;
+                _fundooContext.Notes.Update(result);
+                _fundooContext.SaveChanges();
+
+                return true;
+            }
+        }
     }
 }

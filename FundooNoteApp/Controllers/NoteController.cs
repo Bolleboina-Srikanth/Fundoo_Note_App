@@ -122,5 +122,80 @@ namespace FundooNoteApp.Controllers
 
             }
         }
+        [Authorize]
+        [HttpPatch]
+        [Route("Colour")]
+        public IActionResult updateColor(long NoteId, string colour)
+        {
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            int UserId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.UpdateColorNoteById(NoteId, UserId, colour);
+            if (result != null)
+            {
+                return this.Ok(new { success = true, message = "Colour updated successfully", data = result });
+            }
+            else
+            {
+                return this.BadRequest(new { success = false, message = "Note id not found", data = result });
+            }
+
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("Archive")]
+        public IActionResult ArchiveNote(long NoteId)
+        {
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            int UserId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.ArchiveNoteById(NoteId, UserId);
+            if (result == true)
+            {
+                return this.Ok(new { Success = true, Message = " archive  successfully", Data = result });
+
+            }
+            else
+            {
+                return this.BadRequest(new { Success = false, Message = " Note id not found", Data = result });
+
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("Pin")]
+        public IActionResult PinNote(long NoteId)
+        {
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            int UserId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.PinNoteById(NoteId, UserId);
+            if (result == true)
+            {
+                return this.Ok(new { Success = true, Message = " Pin  successfully", Data = result });
+
+            }
+            else
+            {
+                return this.BadRequest(new { Success = false, Message = " Note id not found", Data = result });
+
+            }
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("Trash")]
+        public IActionResult trashNote(long NoteId)
+        {
+            var UserIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            int UserId = int.Parse(UserIdClaim);
+            var result = _noteBusiness.TrashNoteById(NoteId, UserId);
+            if (result == true)
+            {
+                return this.Ok(new { Success = true, Message = " trash  successfully", Data = result });
+
+            }
+            else
+            {
+                return this.BadRequest(new { Success = false, Message = "Note id not found", Data = result });
+
+            }
+        }
     }
 }
