@@ -1,6 +1,8 @@
 ﻿using CommonLayer.Models;
+using FundooNotesSubscriber.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
@@ -18,12 +20,14 @@ namespace RepoLayer.Services
     {
         private readonly FundooContext _fundooContext;
         private readonly IConfiguration _configuration;
+        private readonly RabbitMQPublisher _rabbitMQPublisher;
 
-        public UserRepo(FundooContext fundooContext, IConfiguration configuration)
+        public UserRepo(FundooContext fundooContext, IConfiguration configuration,RabbitMQPublisher rabbitMQPublisher)
         {
             this._fundooContext = fundooContext;
             this._configuration = configuration;
-        }
+             this._rabbitMQPublisher=rabbitMQPublisher;
+    }
         public UserEntity UserRegisteration(UserRegisterationModel model)
         {
             try
@@ -37,6 +41,16 @@ namespace RepoLayer.Services
 
                 _fundooContext.User.Update(userTable);
                 _fundooContext.SaveChanges();
+                if (userTable != null)
+                {
+                    var message = new UserRegistrationMessage { Email = userTable.Email };
+                    var messageJson = JsonConvert.SerializeObject(message);
+                    _rabbitMQPublisher.PublishMessage("User-Registration-Queue", messageJson);
+                    //Example of sending a message to the RabbitMQ queue
+                    //Print a message to the console to verify
+                    Console.WriteLine($"Message sent to queue: {messageJson}");
+                    return userTable;
+                }
                 if (userTable != null)
                 {
                     return userTable;
@@ -136,5 +150,37 @@ namespace RepoLayer.Services
 
             }
         }
+       /* public UserEntity UserRegistration(UserRegisterationModel userRegisterModel)
+        {
+            try
+            {
+                UserEntity users = new UserEntity();
+                users.FirstName = userRegisterModel.FirstName;
+                users.LastName = userRegisterModel.LastName;
+                users.Email = userRegisterModel.Email;
+                users.Password = userRegisterModel.Password;
+                users.DateOfBirth = userRegisterModel.DateOfBirth;
+                _fundooContext.User.Add(users);
+                _fundooContext.SaveChanges();
+                if (users != null)
+                {
+                    var message = new UserRegistrationMessage { Email = users.Email };
+                    var messageJson = JsonConvert.SerializeObject(message);
+                    _rabbitMQPublisher.PublishMessage("User-Registration-Queue", messageJson);
+                    //Example of sending a message to the RabbitMQ queue
+                    //Print a message to the console to verify
+                    Console.WriteLine($"Message sent to queue: {messageJson}");
+                    return users;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }*/
     }
 }

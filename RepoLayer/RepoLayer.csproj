@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CommonLayer\CommonLayer.csproj" />
+    <ProjectReference Include="..\FundooNotesSubscriber\FundooNotesSubscriber.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,5 @@
+D:\DotNetProject\FundooNoteApp\FundooNoteSubscriber\obj\Debug\netcoreapp3.1\FundooNoteSubscriber.csproj.AssemblyReference.cache
+D:\DotNetProject\FundooNoteApp\FundooNoteSubscriber\obj\Debug\netcoreapp3.1\FundooNoteSubscriber.GeneratedMSBuildEditorConfig.editorconfig
+D:\DotNetProject\FundooNoteApp\FundooNoteSubscriber\obj\Debug\netcoreapp3.1\FundooNoteSubscriber.AssemblyInfoInputs.cache
+D:\DotNetProject\FundooNoteApp\FundooNoteSubscriber\obj\Debug\netcoreapp3.1\FundooNoteSubscriber.AssemblyInfo.cs
+D:\DotNetProject\FundooNoteApp\FundooNoteSubscriber\obj\Debug\netcoreapp3.1\FundooNoteSubscriber.csproj.CoreCompileInputs.cache

@@ -14,3 +14,9 @@ D:\DotNetProject\FundooNoteApp\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.cspro
 D:\DotNetProject\FundooNoteApp\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.dll
 D:\DotNetProject\FundooNoteApp\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.pdb
 D:\DotNetProject\FundooNoteApp\RepoLayer\obj\Debug\netcoreapp3.1\RepoLayer.genruntimeconfig.cache
+D:\DotNetProject\FundooNoteApp\RepoLayer\bin\Debug\netcoreapp3.1\FundooNotesSubscriber.deps.json
+D:\DotNetProject\FundooNoteApp\RepoLayer\bin\Debug\netcoreapp3.1\FundooNotesSubscriber.runtimeconfig.json
+D:\DotNetProject\FundooNoteApp\RepoLayer\bin\Debug\netcoreapp3.1\FundooNotesSubscriber.runtimeconfig.dev.json
+D:\DotNetProject\FundooNoteApp\RepoLayer\bin\Debug\netcoreapp3.1\FundooNotesSubscriber.exe
+D:\DotNetProject\FundooNoteApp\RepoLayer\bin\Debug\netcoreapp3.1\FundooNotesSubscriber.dll
+D:\DotNetProject\FundooNoteApp\RepoLayer\bin\Debug\netcoreapp3.1\FundooNotesSubscriber.pdb
