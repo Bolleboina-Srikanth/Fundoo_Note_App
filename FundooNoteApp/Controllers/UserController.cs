@@ -35,7 +35,7 @@ namespace FundooNoteApp.Controllers
         }
 
         [HttpPost]
-        [Route("Login")]
+        [Route("login")]
         public ActionResult login(UserLoginModel model)
         {
             try

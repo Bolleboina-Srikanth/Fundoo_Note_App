@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[3.1.0, )"
             },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
             "RabbitMQ.Client": {
               "target": "Package",
               "version": "[6.5.0, )"
@@ -134,6 +138,10 @@
             "MassTransit.RabbitMQ": {
               "target": "Package",
               "version": "[8.1.0, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[7.0.10, )"
             },
             "Microsoft.Extensions.Configuration.Json": {
               "target": "Package",
@@ -246,6 +254,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[7.0.10, )"
             },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",

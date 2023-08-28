@@ -4,7 +4,14 @@ using CommonLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using RepoLayer.Context;
+using RepoLayer.Entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,9 +22,13 @@ namespace FundooNoteApp.Controllers
     public class NoteController : ControllerBase
     {
         private readonly INoteBusiness _noteBusiness;
-        public NoteController(INoteBusiness noteBusiness)
+        private readonly IDistributedCache _distributedCache;
+        private readonly FundooContext _fundooContext;
+        public NoteController(INoteBusiness noteBusiness, FundooContext fundooContext, IConfiguration configuration,IDistributedCache distributedCache)
         {
             this._noteBusiness = noteBusiness;
+            this._fundooContext= fundooContext;
+            this._distributedCache= distributedCache;
         }
         [Authorize]
         [HttpPost]
@@ -218,6 +229,31 @@ namespace FundooNoteApp.Controllers
                 return this.BadRequest(new { success = true, Message = "image uploaded unsuccessfully", data = result });
             }
 
+        }
+        [Authorize]
+        [HttpGet("GetAllNoteByRedis")]
+        public async Task<IActionResult> GetAllNoteswd()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(claim => claim.Type == "UserId").Value;
+            int userId = int.Parse(userIdClaim);
+            // Check if data is cached
+            var cachedData = await _distributedCache.GetStringAsync($"Notes_{userId}");
+            if (cachedData != null)
+            {
+                var notes = JsonConvert.DeserializeObject<List<NoteEntity>>(cachedData);
+                return this.Ok(new { success = true, Message = "Notes retrieved from cache successfully", Data = notes });
+            }
+            else
+            {
+                var notesFromDb = _fundooContext.Notes.Where(note => note.UserId == userId).ToList();
+                // Cache the data for 1 hour
+                var cacheOptions = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(1)
+                };
+                await _distributedCache.SetStringAsync($"Notes_{userId}", JsonConvert.SerializeObject(notesFromDb), cacheOptions);
+                return this.Ok(new { success = true, Message = "Notes retrieved successfully", Data = notesFromDb });
+            }
         }
     }
 }
